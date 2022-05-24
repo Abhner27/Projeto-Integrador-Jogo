@@ -14,22 +14,9 @@ public class MudarTexto : MonoBehaviour
     [DllImport("__Internal")]
     private static extern void HelloString(string str);
 
-    private void Start()
+    public void hello()
     {
-        PlayerPrefs.SetString("Primeira string", "Olá mundo!");
-        PlayerPrefs.SetString("Segunda string", "Tchau mundo!");
         Hello();
-    }
-    void Update()
-    {
-        if (Input.GetKeyDown("a"))
-        {
-            texto.text = PlayerPrefs.GetString("Primeira string");
-        }
-        else if (Input.GetKeyDown("d"))
-        {
-            texto.text = PlayerPrefs.GetString("Segunda string");
-        }
     }
 
     public void setText(string novoTexto)
@@ -40,21 +27,6 @@ public class MudarTexto : MonoBehaviour
     public void JSLIBSetString(string novoTexto)
     {
         HelloString(novoTexto);
-    }
-
-    public string getText()
-    {
-        return texto.text;
-    }
-
-    public void saveText()
-    {
-        textoSalvo = texto.text;
-    }
-
-    public void showSavedText()
-    {
-        texto.text = textoSalvo;
     }
 
     public void MudarParaCena(int i)

@@ -234,6 +234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   texto: {fileID: 2114201875}
+  textoSalvo: Abhner
 --- !u!4 &830248310
 Transform:
   m_ObjectHideFlags: 0
@@ -482,7 +483,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: "Bem vindo aos nossos jogos... Escolha nos bot\xF5es acima (na p\xE1gina)
+    qual jogo vc quer experimentar!"
 --- !u!222 &2114201876
 CanvasRenderer:
   m_ObjectHideFlags: 0
