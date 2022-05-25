@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Verificador : MonoBehaviour
@@ -40,13 +41,7 @@ public class Verificador : MonoBehaviour
 
             if (index == resposta.Length)
             {
-                    //da como correto!
-                    //acaba essa prte a fase!
-                    //atualiza o nome no mapa mundi!
-                Debug.Log("Concluiu!");
-                MapManager.instance.atualizarContinente();
-                gameObject.SetActive(false);
-                canvasPrincipal.SetActive(true);
+                StartCoroutine(acertou());
             }
         }
         else
@@ -55,4 +50,27 @@ public class Verificador : MonoBehaviour
             Debug.Log("Essa letra esta errada!");
         }
     }
+
+
+    IEnumerator acertou()
+    {
+        Debug.Log("Concluiu!");
+        MapManager.instance.atualizarContinente();
+
+        yield return new WaitForSeconds(0.2f);
+        AudioManager.instance.PlaySound("LetrasCorretasSound");
+
+        foreach (Transform l in listaDeletras)
+        {
+            l.GetComponent<Animator>().SetTrigger("UpDown");
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        yield return new WaitForSeconds(3f);
+
+        gameObject.SetActive(false);
+        canvasPrincipal.SetActive(true);
+
+    }
+
 }

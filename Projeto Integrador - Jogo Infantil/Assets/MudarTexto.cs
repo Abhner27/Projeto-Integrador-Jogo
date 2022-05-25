@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class MudarTexto : MonoBehaviour
 {
     public Text texto;
@@ -13,6 +14,26 @@ public class MudarTexto : MonoBehaviour
 
     [DllImport("__Internal")]
     private static extern void HelloString(string str);
+
+
+    public static MudarTexto instance;
+
+    void Awake()
+    {
+        if (instance != null && instance != this)
+            Destroy(this.gameObject);
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(instance);
+        }
+    }
+
+
+
+
+
+
 
     public void hello()
     {
