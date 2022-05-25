@@ -66,7 +66,9 @@ public class Verificador : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
 
-        yield return new WaitForSeconds(3f);
+        GetComponent<AudioSource>().Play();
+
+        yield return new WaitForSeconds(3.5f);
 
         gameObject.SetActive(false);
         canvasPrincipal.SetActive(true);
