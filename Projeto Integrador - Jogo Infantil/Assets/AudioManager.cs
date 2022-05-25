@@ -74,4 +74,33 @@ public class AudioManager : MonoBehaviour
             s.source.Play();
         }
     }
+
+    public void PlaySound(string name, float pitch)
+    {
+        Sounds s = Array.Find(sounds, sound => sound.name == name);
+
+        if (TocaUmaVez == true && Looping == false)
+        {
+            s.source.PlayOneShot(s.clip);
+        }
+        else if (Looping == true && TocaUmaVez == true)
+        {
+            if (s.source.isPlaying == false)
+            {
+                s.source.PlayOneShot(s.clip);
+            }
+        }
+        else
+        {
+            s.source.pitch = pitch;
+            s.source.Play();
+        }
+    }
+
+
+    public void MudarPitch(string name, float novoPitch)
+    {
+        Sounds s = Array.Find(sounds, sound => sound.name == name);
+        s.source.pitch = novoPitch;
+    }
 }

@@ -38,6 +38,8 @@ public class Verificador : MonoBehaviour
             letraCorreta.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = letra.letra.ToString();
             index++;
             Destroy(letra.gameObject);
+            //toca som!
+            AudioManager.instance.PlaySound("Bong", 1f + (float)index/resposta.Length);
 
             if (index == resposta.Length)
             {
@@ -47,6 +49,7 @@ public class Verificador : MonoBehaviour
         else
         {
             //mostra um UI de erro!
+            AudioManager.instance.PlaySound("Wrong");
             Debug.Log("Essa letra esta errada!");
         }
     }
@@ -54,21 +57,24 @@ public class Verificador : MonoBehaviour
 
     IEnumerator acertou()
     {
-        Debug.Log("Concluiu!");
         MapManager.instance.atualizarContinente();
 
+        yield return new WaitForSeconds(0.6f);
+        AudioManager.instance.MudarPitch("Bong", 1f);
         yield return new WaitForSeconds(0.2f);
         AudioManager.instance.PlaySound("LetrasCorretasSound");
 
         foreach (Transform l in listaDeletras)
         {
             l.GetComponent<Animator>().SetTrigger("UpDown");
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
         }
+
+        yield return new WaitForSeconds(1f);
 
         GetComponent<AudioSource>().Play();
 
-        yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(2.5f);
 
         gameObject.SetActive(false);
         canvasPrincipal.SetActive(true);

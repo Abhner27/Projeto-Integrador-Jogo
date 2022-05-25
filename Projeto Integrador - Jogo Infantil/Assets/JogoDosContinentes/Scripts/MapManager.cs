@@ -14,6 +14,13 @@ public class MapManager : MonoBehaviour
 
     public static MapManager instance;
 
+    [SerializeField]
+    private GameObject vitoriaGO;
+
+    const int totalContinentes = 6;
+    int quantContinentes = 0;
+
+
     private void Awake()
     {
         instance = this;
@@ -36,6 +43,14 @@ public class MapManager : MonoBehaviour
         button.interactable = false;
         text.text = resposta;
         continente.transform.localScale = Vector3.one;
+
+        quantContinentes++;
+        if (quantContinentes == totalContinentes)
+        {
+            vitoriaGO.SetActive(true);
+        }
+
+
     }
 
 }
