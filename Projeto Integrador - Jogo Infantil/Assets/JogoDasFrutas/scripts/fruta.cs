@@ -3,7 +3,7 @@ public class fruta
 {
     public string nome;
     public string cor; //codigo (i.e. #FFFFFF)
-    public int id; //codigo (i.e. #FFFFFF)
+    public int id;
 
     public fruta(string _nome, string _cor, int _id)
     {
