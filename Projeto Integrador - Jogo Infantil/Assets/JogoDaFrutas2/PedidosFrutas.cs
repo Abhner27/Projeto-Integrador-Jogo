@@ -21,12 +21,13 @@ public class PedidosFrutas : MonoBehaviour
 
     private static void EscolherValores(pedidoDeFrutas pedido)
     {
-        pedido.quantRequerida = Random.Range(0, 11);
+        pedido.quantRequerida = Random.Range(0, 4);
     }
 
     public static void addFruta(pedidoDeFrutas pedido)
     {
         pedido.quantAtual++;
+
         atualizarUI?.Invoke();
     }
 
@@ -38,6 +39,18 @@ public class PedidosFrutas : MonoBehaviour
             EscolherValores(pedido);
         }
         atualizarUI?.Invoke();
+    }
+
+
+
+    public static bool completou()
+    {
+        foreach (pedidoDeFrutas pedido in frutas.pedidos)
+        {
+            if (pedido.quantAtual != pedido.quantRequerida)
+                return false;
+        }
+        return true;
     }
 }
 

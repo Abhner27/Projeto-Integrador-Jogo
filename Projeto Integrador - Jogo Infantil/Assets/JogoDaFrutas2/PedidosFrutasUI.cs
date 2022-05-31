@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using TMPro;
 
 public class PedidosFrutasUI : MonoBehaviour
@@ -16,19 +17,48 @@ public class PedidosFrutasUI : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI textPeras;
 
+    private Dictionary<pedidoDeFrutas , TextMeshProUGUI> textsDictionary = new Dictionary<pedidoDeFrutas, TextMeshProUGUI>(6);
+
     private void Start()
     {
+        textsDictionary.Add(frutas.macas, textMacas);
+        textsDictionary.Add(frutas.uvas, textUvas);
+        textsDictionary.Add(frutas.abacaxis, textAbacaxis);
+        textsDictionary.Add(frutas.melancias, textMelancias);
+        textsDictionary.Add(frutas.morangos, textMorangos);
+        textsDictionary.Add(frutas.peras, textPeras);
+
         PedidosFrutas.atualizarUI += atualizarUI;
     }
 
     public void atualizarUI()
     {
-        textMacas.text = frutas.macas.quantAtual + " / " + frutas.macas.quantRequerida;
-        textAbacaxis.text = frutas.abacaxis.quantAtual + " / " + frutas.abacaxis.quantRequerida;
-        textMelancias.text = frutas.melancias.quantAtual + " / " + frutas.melancias.quantRequerida;
-        textMorangos.text = frutas.morangos.quantAtual + " / " + frutas.morangos.quantRequerida;
-        textPeras.text = frutas.peras.quantAtual + " / " + frutas.peras.quantRequerida;
-        textUvas.text = frutas.uvas.quantAtual + " / " + frutas.uvas.quantRequerida;
+        //Se é 0, deixa inatvo o gameObject!
+        //Se completou, muda a cor para verde
+
+        foreach (pedidoDeFrutas pedido in frutas.pedidos)
+        {
+            if (pedido.quantRequerida == 0)
+            {
+                textsDictionary[pedido].transform.parent.gameObject.SetActive(false);
+                continue;
+            }
+            else
+            {
+                textsDictionary[pedido].transform.parent.gameObject.SetActive(true);
+            }
+
+            if (pedido.quantAtual == pedido.quantRequerida)
+            {
+                textsDictionary[pedido].color = Color.green;
+            }
+            else
+            {
+                textsDictionary[pedido].color = Color.white;
+            }
+
+            textsDictionary[pedido].text = pedido.quantAtual + " / " + pedido.quantRequerida;
+        }
     }
 
     private void OnDestroy()
