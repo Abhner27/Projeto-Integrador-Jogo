@@ -17,7 +17,7 @@ public class GeradorDeFrutas : MonoBehaviour
 
     IEnumerator cooldown()
     {
-        yield return new WaitForSeconds(Random.Range(1f, 3f));
+        yield return new WaitForSeconds(Random.Range(1f, DificuldadeFrutas.MaiorValorTempo));
         GerarFruta();
         StartCoroutine(cooldown());
     }

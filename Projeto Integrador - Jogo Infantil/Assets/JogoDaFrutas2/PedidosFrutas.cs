@@ -21,7 +21,7 @@ public class PedidosFrutas : MonoBehaviour
 
     private static void EscolherValores(pedidoDeFrutas pedido)
     {
-        pedido.quantRequerida = Random.Range(0, 4);
+        pedido.quantRequerida = Random.Range(0, DificuldadeFrutas.QuantMaxPedidos);
     }
 
     public static void addFruta(pedidoDeFrutas pedido)

@@ -17,8 +17,25 @@ public class Verificador : MonoBehaviour
     [SerializeField]
     GameObject canvasPrincipal;
 
+
+    [HideInInspector]
+    public static int Pontos = 0;
+    [HideInInspector]
+    public static int Erros = 0;
+    [HideInInspector]
+    public static int Acertos = 0;
+
+    public static ContarTempo contarTempo;
+
     private void Start()
     {
+        if (contarTempo == null)
+        {
+            GameObject go = new GameObject();
+            contarTempo = go.AddComponent<ContarTempo>();
+            contarTempo.Iniciar();
+        }
+
         for(int i =0; i<listaDePalavras.Length; i++) //para cada palavra
         {
             for (int j =0; j < listaDePalavras[i].childCount; j++) //em cada letra dessa palavra
@@ -33,6 +50,7 @@ public class Verificador : MonoBehaviour
         if (resposta[index] == letra.letra)
         {
             //correto!
+            Acertos++;
             //add letra no lugr do espaço e tira letra dentre as disponíveis!
             GameObject letraCorreta = Instantiate(letraPrefab, listaDeletras[index]);
             letraCorreta.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = letra.letra.ToString();
@@ -49,6 +67,7 @@ public class Verificador : MonoBehaviour
         else
         {
             //mostra um UI de erro!
+            Erros++;
             AudioManager.instance.PlaySound("Wrong");
             Debug.Log("Essa letra esta errada!");
         }
@@ -58,6 +77,7 @@ public class Verificador : MonoBehaviour
     IEnumerator acertou()
     {
         MapManager.instance.atualizarContinente();
+        Pontos++;
 
         yield return new WaitForSeconds(0.6f);
         AudioManager.instance.MudarPitch("Bong", 1f);
@@ -80,5 +100,4 @@ public class Verificador : MonoBehaviour
         canvasPrincipal.SetActive(true);
 
     }
-
 }

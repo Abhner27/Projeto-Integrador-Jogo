@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine.Networking;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -48,9 +48,28 @@ public class MapManager : MonoBehaviour
         if (quantContinentes == totalContinentes)
         {
             vitoriaGO.SetActive(true);
+            Verificador.Pontos++;
+            EnviarResultados();
         }
-
-
     }
 
+    private void OnApplicationQuit()
+    {
+        EnviarResultados();
+    }
+
+    private static void EnviarResultados()
+    {
+        Resultado aluno = AzureWebRequest.CriarResultado(IDAluno.id, 2, Verificador.contarTempo.TempoJogada, Verificador.Acertos, Verificador.Erros, Verificador.Pontos);
+
+        string meuJson = JsonConvert.SerializeObject(aluno);
+
+        Debug.Log("Processo iniciado...");
+
+        Debug.Log("Json enviado: " + meuJson);
+
+        UnityWebRequest uni = AzureWebRequest.CreateUnityWebRequest("https://pi3webgameapp.azurewebsites.net/api/APIResultadoJogadas", meuJson);
+
+        uni.SendWebRequest();
+    }
 }
